@@ -19,8 +19,25 @@ protected ArrayList<Course> vCourse;
 		objCourseFile.close();
 	}
 
-	public ArrayList<Course> getAllCourseRecords() {
+	public ArrayList<Course> getAllCourseRecords() throws NullDataException {
+		if(this.vCourse.size()==0)throw new NullDataException("Course data is null");
 		return this.vCourse;
+	}
+	
+	public boolean addCourseRecords(String courseInfo) {
+		if(this.vCourse.add(new Course(courseInfo)))return true;
+		else return false;
+	}
+
+	public boolean deleteCourseRecords(String courseId) {
+		for (int i = 0; i < this.vCourse.size(); i++) {
+			Course course = (Course) this.vCourse.get(i);
+			if (course.match(courseId)) {
+				if(this.vCourse.remove(course))return true;
+				else return false;
+			}
+		}
+		return false;
 	}
 
 //	public boolean isRegisteredCourse(String sCID) {

@@ -33,7 +33,7 @@ public class Data extends UnicastRemoteObject implements DataIF{
 		return studentList.getAllStudentRecords();
 	}
 	@Override
-	public ArrayList<Course> getAllCourseData() throws RemoteException {
+	public ArrayList<Course> getAllCourseData() throws RemoteException, NullDataException {
 		// TODO Auto-generated method stub
 		return courseList.getAllCourseRecords();
 	}
@@ -45,6 +45,16 @@ public class Data extends UnicastRemoteObject implements DataIF{
 	@Override
 	public boolean deleteStudent(String studentId) throws RemoteException {
 		if(studentList.deleteStudentRecords(studentId))return true;
+		return false;
+	}
+	@Override
+	public boolean addCourse(String courseInfo) throws RemoteException {
+		if(courseList.addCourseRecords(courseInfo))return true;
+		return false;
+	}
+	@Override
+	public boolean deleteCourse(String courseId) throws RemoteException {
+		if(courseList.deleteCourseRecords(courseId))return true;
 		return false;
 	}
 }
