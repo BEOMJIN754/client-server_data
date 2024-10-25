@@ -40,13 +40,13 @@ protected ArrayList<Course> vCourse;
 		return false;
 	}
 
-//	public boolean isRegisteredCourse(String sCID) {
-//		for (int i = 0; i < this.vCourse.size(); i++) {
-//			Course objCourse = (Course) this.vCourse.get(i);
-//			if (objCourse.match(sCID)) {
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
+	public boolean isRegisteredCourse(String sCID) {
+		for (int i = 0; i < this.vCourse.size(); i++) {
+			Course objCourse = (Course) this.vCourse.get(i);
+			if (objCourse.match(sCID)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
