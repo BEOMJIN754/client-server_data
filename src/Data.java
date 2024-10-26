@@ -77,22 +77,19 @@ public class Data extends UnicastRemoteObject implements DataIF {
 			return true;
 		return false;
 	}
-
 	@Override
-	public boolean registerCourse(String studentId, String courseId) throws RemoteException {
-		if (registrationList.addRegistrationRecords(studentId, courseId))
-			return true;
-		return false;
+	public boolean registerCourse(String studentId,String courseId) throws RemoteException {
+	 
+	    Student student = studentList.findStudentById(studentId);
+	    if (student != null) {
+	        student.registerCourse(courseId); // Student 객체에 courseId 추가
+	        return registrationList.addRegistrationRecords(studentId,courseId); // registrationList에 등록 추가
+	    }
+	    return false;
 	}
-
 	@Override
 	public Student getStudentById(String studentId) throws RemoteException, NullDataException {
-		for (Student student : studentList.getAllStudentRecords()) {
-			if (student.match(studentId)) {
-				return student;
-			}
-		}
-		return null;
+		return studentList.findStudentById(studentId);
 	}
 
 	@Override
@@ -127,5 +124,18 @@ public class Data extends UnicastRemoteObject implements DataIF {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public boolean deleteRegistration(String studentId, String courseId) throws RemoteException {
+	    // RegistrationList에서 등록 삭제
+	    boolean registrationDeleted = registrationList.deleteRegistration(studentId, courseId);
+	    
+	    if (registrationDeleted) {
+	        // studentList를 통해 studentId로 학생 객체를 찾아 registeredCourses에서 해당 courseId 삭제
+	        studentList.removeRegisteredCourse(studentId, courseId);
+	        return true;
+	    }
+	    return false;
 	}
 }

@@ -40,6 +40,14 @@ public class StudentList {
 		}
 		return false;
 	}
+	 public Student findStudentById(String studentId) {
+	        for (Student student : vStudent) {
+	            if (student.match(studentId)) {
+	                return student;
+	            }
+	        }
+	        return null;
+	    }
 	public boolean isRegisteredStudent(String sSID) {
 		for (int i = 0; i < this.vStudent.size(); i++) {
 			Student objStudent = (Student) this.vStudent.get(i);
@@ -48,5 +56,11 @@ public class StudentList {
 			}
 		}
 		return false;
+	}
+	public void removeRegisteredCourse(String studentId, String courseId) {
+	    Student student = findStudentById(studentId);
+	    if (student != null) {
+	        student.removeRegisteredCourse(courseId); // Student 객체에서 courseId 제거
+	    }
 	}
 }
